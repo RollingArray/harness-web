@@ -1,0 +1,7 @@
+{
+  "name": "harness-w3c",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

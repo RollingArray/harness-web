@@ -1,0 +1,372 @@
+/**
+ * © Collins Aerospace https://www.collinsaerospace.com/
+ *
+ * @summary This is the common eslintrc.json file which holds all the lint rules to be 
+ * used in the respective apps. This file shoe be reviewed periodically and update with any new rules.
+ * Please use the README file to know any pre-requisite to set up these lint rules
+ *
+ * @author Ranjoy Sen <ranjoy.sen@collins.com>
+ *
+ * Created at     : 2023-03-14 18:11:43 
+ * Last modified  : 2023-04-01 18:26:15
+ */
+
+ {
+	"root": true,
+	"ignorePatterns": [
+		"projects/**/*"
+	],
+	"overrides": [
+		{
+			"plugins": [
+				"header"
+			],
+			"files": [
+				"*.ts"
+			],
+			"parserOptions": {
+				"project": [
+					"./tsconfig.json"
+				]
+			},
+			"extends": [
+				"eslint:recommended",
+				"plugin:@typescript-eslint/recommended",
+				"plugin:@angular-eslint/recommended",
+				// This is required if you use inline templates in Components
+				"plugin:@angular-eslint/template/process-inline-templates"
+			],
+			"rules": {
+				/**
+		   * Any TypeScript source code (NOT TEMPLATE) related rules you wish to use/reconfigure over and above the
+		   * recommended set provided by the @angular-eslint project would go here.
+		   */
+				// @angular-eslint
+				"@angular-eslint/directive-selector": [
+					"error",
+					{
+						"type": "attribute",
+						"prefix": "app",
+						"style": "camelCase"
+					}
+				],
+				"@angular-eslint/component-selector": [
+					"error",
+					{
+						"type": "element",
+						"prefix": "app",
+						"style": "kebab-case"
+					}
+				],
+				"@angular-eslint/component-class-suffix": [
+					"error",
+					{
+						"suffixes": [
+							"Page",
+							"Component"
+						]
+					}
+				],
+				"@angular-eslint/contextual-lifecycle": "error",
+				
+				//Specific @typescript-eslint rules which are not part of recommended plugins but important
+				"@typescript-eslint/unbound-method": "error",
+				"@typescript-eslint/restrict-plus-operands": "error",
+				"@typescript-eslint/no-empty-interface": "error",
+				"@typescript-eslint/naming-convention": [
+					"error",
+					{
+						"selector": "variable",
+						"types": [
+							"boolean"
+						],
+						"format": [
+							"camelCase"
+						],
+						"prefix": [
+							"is",
+							"should",
+							"has",
+							"can",
+							"did",
+							"will"
+						]
+					}, //Enforce that boolean variables are prefixed with an allowed verb
+					{
+						"selector": "variable",
+						"modifiers": [
+							"const"
+						],
+						"format": [
+							"UPPER_CASE"
+						]
+					}, //Enforce that all const variables are in UPPER_CASE
+					{
+						"selector": "typeParameter",
+						"format": [
+							"PascalCase"
+						],
+						"prefix": [
+							"T"
+						]
+					}, //Enforce that type parameters (generics) are prefixed with T
+					{
+						"selector": "interface",
+						"format": [
+							"PascalCase"
+						],
+						"custom": {
+							"regex": "^I[A-Z]",
+							"match": false
+						}
+					}, //Enforce that interface names do not begin with an I
+					{
+						"selector": "variableLike",
+						"format": [
+							"camelCase"
+						]
+					}, //Enforce that all variables, functions and properties follow are camelCase
+					{
+						"selector": [
+							"variable",
+							"function"
+						],
+						"format": [
+							"camelCase"
+						],
+						"leadingUnderscore": "allow"
+					}, //Enforce that variable and function names are in camelCase
+					{
+						"selector": "memberLike",
+						"modifiers": [
+							"private"
+						],
+						"format": [
+							"camelCase"
+						],
+						"leadingUnderscore": "require"
+					} //Enforce that private members are prefixed with an underscore
+				],
+				"@typescript-eslint/typedef": [
+					"error",
+					{
+						" explicit-function-return-type": true
+					}
+				],
+				"@typescript-eslint/no-inferrable-types": "error",
+				"@typescript-eslint/prefer-enum-initializers": "error",
+				"@typescript-eslint/no-duplicate-enum-values": "error",
+				"@typescript-eslint/no-extraneous-class": "error",
+				"@typescript-eslint/no-invalid-void-type": "error",
+				"@typescript-eslint/no-unsafe-declaration-merging": "error",
+				"@typescript-eslint/prefer-for-of": "error",
+				"@typescript-eslint/prefer-literal-enum-member": "error",
+				"@typescript-eslint/unified-signatures": "error",
+				"@typescript-eslint/member-delimiter-style": "error",
+				"@typescript-eslint/method-signature-style": "error",
+				"@typescript-eslint/no-useless-empty-export": "error",
+				"@typescript-eslint/type-annotation-spacing": "error",
+				"@typescript-eslint/no-redundant-type-constituents": "error",
+				"@typescript-eslint/require-array-sort-compare": "error",
+				"@typescript-eslint/no-unsafe-member-access": "error",
+				
+				// Specific general rules for variable rules which are not part of recommended plugins but important
+				"init-declarations": "error",
+				"no-label-var": "error",
+				"no-restricted-globals": "error",
+				"no-shadow-restricted-names": "error",
+				"no-undef": "error",
+				"no-undef-init": "error",
+				"no-undefined": "error",
+				"no-unused-vars": "error",
+				"no-use-before-define": "error",
+				
+				// Specific Rules relate to possible syntax or logic errors which are not part of recommended plugins but important
+				"for-direction": "error",
+				"getter-return": "error",
+				"no-await-in-loop": "error",
+				"no-template-curly-in-string": "error",
+				"require-jsdoc": ["error", {
+					"require": {
+						"FunctionDeclaration": true,
+						"MethodDefinition": true,
+						"ClassDeclaration": true,
+						"ArrowFunctionExpression": true,
+						"FunctionExpression": true
+					}
+				}],
+				// Specific best practice rules to avoid any issues which are not part of recommended plugins but important
+				"indent": ["error", 4],
+				"accessor-pairs": "error",
+				"block-scoped-var": "error",
+				"class-methods-use-this": "error",
+				"complexity": [
+					"error",
+					10
+				],
+				"consistent-return": "error",
+				"curly": "error",
+				"default-case": "error",
+				"dot-location": "error",
+				"dot-notation": "error",
+				"eqeqeq": "error",
+				"guard-for-in": "error",
+				"no-alert": "error",
+				"no-caller": "error",
+				"no-div-regex": "error",
+				"no-else-return": "error",
+				"no-empty-function": "error",
+				"no-empty-pattern": "error",
+				"no-eq-null": "error",
+				"no-eval": "error",
+				"no-extend-native": "error",
+				"no-extra-bind": "error",
+				"no-extra-label": "error",
+				"no-fallthrough": "error",
+				"no-floating-decimal": "error",
+				"no-global-assign": "error",
+				"no-implicit-coercion": "error",
+				"no-implicit-globals": "error",
+				"no-implied-eval": "error",
+				"no-invalid-this": "error",
+				"no-iterator": "error",
+				"no-labels": "error",
+				"no-lone-blocks": "error",
+				"no-loop-func": "error",
+				"no-multi-spaces": "error",
+				"no-multi-str": "error",
+				"no-new": "error",
+				"no-new-func": "error",
+				"no-new-wrappers": "error",
+				"no-octal": "error",
+				"no-octal-escape": "error",
+				"no-param-reassign": "error",
+				"no-proto": "error",
+				"no-redeclare": "error",
+				"no-restricted-properties": "error",
+				"no-return-assign": "error",
+				"no-return-await": "error",
+				"no-script-url": "error",
+				"no-self-assign": "error",
+				"no-self-compare": "error",
+				"no-sequences": "error",
+				"no-throw-literal": "error",
+				"no-unmodified-loop-condition": "error",
+				"no-unused-expressions": "error",
+				"no-unused-labels": "error",
+				"no-useless-call": "error",
+				"no-useless-concat": "error",
+				"no-useless-escape": "error",
+				"no-useless-return": "error",
+				"no-void": "error",
+				"no-warning-comments": "error",
+				"no-with": "error",
+				"prefer-promise-reject-errors": "error",
+				"radix": "error",
+				"require-await": "error",
+				"vars-on-top": "error",
+				"wrap-iife": "error",
+				"yoda": "error",
+				
+				// Specific consistent style which are not part of recommended plugins but important
+				"array-bracket-newline": [
+					"error",
+					"always"
+				],
+				"array-bracket-spacing": [
+					"error",
+					"always"
+				],
+				"array-element-newline": [
+					"error",
+					"always"
+				],
+				"block-spacing": "error",
+				"capitalized-comments": [
+					"error",
+					"always"
+				],
+				"comma-dangle": [
+					"error",
+					{
+						"arrays": "never",
+						"objects": "never",
+						"imports": "never",
+						"exports": "never",
+						"functions": "ignore"
+					}
+				],
+				"comma-spacing": [
+					"error",
+					{
+						"before": false,
+						"after": true
+					}
+				],
+				"comma-style": [
+					"error",
+					"last"
+				],
+				"computed-property-spacing": [
+					"error",
+					"always"
+				],
+				"eol-last": [
+					"error",
+					"always"
+				],
+				"func-name-matching": [
+					"error",
+					"always"
+				],
+				"max-depth": [
+					"error",
+					4
+				],
+				"max-len": [
+					"error",
+					200,
+					4
+				],
+				"max-nested-callbacks": [
+					"error",
+					3
+				],
+				"max-params": [
+					"error",
+					5
+				],
+				"max-statements-per-line": [
+					"error",
+					{
+						"max": 1
+					}
+				],
+				"multiline-ternary": [
+					"error",
+					"always"
+				],
+				"no-lonely-if": "error",
+
+				// Consistent file header, install eslint-plugin-header npm package to use this
+				"header/header": [
+					"error",
+					"block",
+					[
+						{
+							"pattern": "\\*.*"
+						}
+					]
+				]
+			}
+		},
+		{
+			"files": [
+				"*.html"
+			],
+			"extends": [
+				"plugin:@angular-eslint/template/recommended"
+			]
+		}
+	]
+}

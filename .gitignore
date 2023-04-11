@@ -1,0 +1,24 @@
+# Logs
+logs
+*.log
+
+# Dependency directories
+node_modules/
+www/
+
+# Compiled output
+dist/
+tmp/
+out-tsc/
+/.angular/cache
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Other
+.DS_Store
+Thumbs.db

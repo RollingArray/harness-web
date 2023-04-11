@@ -1,0 +1,315 @@
+<!-- This file is part of My Awesome Project.
+  
+  (c) 2023 My Company, Inc. All rights reserved.
+  
+  Licensed under the Apache License, Version 2.0
+-->
+<ion-header>
+	<ion-toolbar
+		color="light">
+		<ion-title>DDOL
+			2023
+			::
+			The
+			Secret
+			Sauce
+			To
+			Deliver
+			Lightning-Fast
+			Client
+			Side
+			Web
+			Apps</ion-title>
+		<ion-button
+			slot="end"
+			color="light">
+			V
+			1.0.5
+		</ion-button>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content
+	[fullscreen]="true">
+	<ion-grid>
+		<ion-row>
+			<ion-col
+				sizeLg="6"
+				sizeMd="12"
+				sizeSm="12"
+				sizeXl="6"
+				sizeXs="12">
+				<ion-card>
+					<ion-item>
+						<ion-title
+							color="danger">
+							Matrix
+							Multiplication
+						</ion-title>
+					</ion-item>
+					<ion-item>
+						Matrix
+						multiplication
+						is
+						an
+						operation
+						that
+						combines
+						two
+						matrices
+						to
+						produce
+						a
+						third
+						matrix.
+						It
+						is
+						a
+						fundamental
+						operation
+						in
+						linear
+						algebra
+						and
+						is
+						used
+						in
+						many
+						mathematical
+						and
+						scientific
+						applications.
+					</ion-item>
+					<ion-item>
+						<ion-img
+							src="../assets//images/dot-product.png"></ion-img>
+					</ion-item>
+					<ion-label>
+
+
+
+					</ion-label>
+				</ion-card>
+				<ion-icon
+					slot="end"
+					name="arrow-down-outline"></ion-icon>
+				<ion-card
+					*ngIf="isJSSlotVisible">
+					<ion-item
+						(click)="calculateJavaScriptMatrixMultiplication()"
+						color="dark">
+						<ion-label>
+							<b> Using
+								Raw
+								JavaScript</b>
+						</ion-label>
+						<ion-badge
+							color="danger">
+							{{
+							matrixMultiplicationRange[
+							JSMatrixMultiplicationRangeIndex
+							]
+							}}
+							X
+							{{
+							matrixMultiplicationRange[
+							JSMatrixMultiplicationRangeIndex
+							]
+							}}
+						</ion-badge>
+						&nbsp;elements
+					</ion-item>
+					<ion-item>
+						<ion-spinner
+							*ngIf="timeSpentOnJSMatrixMultiplication.length > 0 && timeSpentOnJSMatrixMultiplication.length !== matrixMultiplicationRange.length - 1"
+							name="dots"></ion-spinner>
+						<ion-range
+							min="0"
+							[ticks]="true"
+							[snaps]="true"
+							[max]="matrixMultiplicationRange.length - 1"
+							[(ngModel)]="JSMatrixMultiplicationRangeIndex"
+							(ionChange)="calculateJavaScriptMatrixMultiplication()"
+							color="dark">
+							<ion-label
+								range-left>{{
+								matrixMultiplicationRange[0]
+								}}</ion-label>
+							<ion-label
+								range-right>{{
+								matrixMultiplicationRange[
+								matrixMultiplicationRange.length
+								-
+								1
+								]
+								}}</ion-label>
+							<ion-icon
+								slot="end"
+								name="arrow-down-outline"
+								(click)="showNextSlot('WW')"></ion-icon>
+						</ion-range>
+					</ion-item>
+				</ion-card>
+
+				<!-- web worker -->
+				<ion-card
+					*ngIf="isWebWorkerSlotVisible">
+					<ion-item
+						color="secondary">
+						<ion-label>
+							<b> Using
+								Web
+								Worker</b>
+						</ion-label>
+						
+						<ion-badge
+							*ngIf="webWorkerMatrixMultiplicationRangeIndex !== 0"
+							color="danger">
+							{{
+							matrixMultiplicationRange[
+							webWorkerMatrixMultiplicationRangeIndex
+							]
+							}}
+							X
+							{{
+							matrixMultiplicationRange[
+							webWorkerMatrixMultiplicationRangeIndex
+							]
+							}}
+						</ion-badge>
+					</ion-item>
+					<ion-item>
+						<ion-spinner
+							*ngIf="timeSpentOnWebWorkerMatrixMultiplication.length > 0 && timeSpentOnWebWorkerMatrixMultiplication.length !== matrixMultiplicationRange.length - 1"
+							name="dots"></ion-spinner>
+						<ion-range
+							min="0"
+							[ticks]="true"
+							[snaps]="true"
+							[max]="matrixMultiplicationRange.length - 1"
+							[(ngModel)]="webWorkerMatrixMultiplicationRangeIndex"
+							(ionChange)="calculateWebWorkerMatrixMultiplication()"
+							color="secondary">
+							<ion-label
+								range-left>{{
+								matrixMultiplicationRange[0]
+								}}</ion-label>
+							<ion-label
+								range-right>{{
+								matrixMultiplicationRange[
+								matrixMultiplicationRange.length
+								-
+								1
+								]
+								}}</ion-label>
+							<ion-icon
+								slot="end"
+								name="arrow-down-outline"
+								(click)="showNextSlot('WA')"></ion-icon>
+						</ion-range>
+					</ion-item>
+				</ion-card>
+				<!-- web worker -->
+
+				<!-- web assembly -->
+				<ion-card
+					*ngIf="isWebAssemblySlotVisible">
+					<ion-item
+						color="success">
+						<ion-label>
+							<b> Using
+								Web
+								Worker</b>
+						</ion-label>
+						<ion-badge
+							color="danger">
+							{{
+							matrixMultiplicationRange[
+							webAssemblyMatrixMultiplicationRangeIndex
+							]
+							}}
+							X
+							{{
+							matrixMultiplicationRange[
+							webAssemblyMatrixMultiplicationRangeIndex
+							]
+							}}
+						</ion-badge>
+						&nbsp;elements
+					</ion-item>
+					<ion-item>
+						<ion-spinner
+							*ngIf="timeSpentOnWebAssemblyMatrixMultiplication.length > 0 && timeSpentOnWebAssemblyMatrixMultiplication.length !== matrixMultiplicationRange.length - 1"
+							name="dots"></ion-spinner>
+						<ion-range
+							min="0"
+							[ticks]="true"
+							[snaps]="true"
+							[max]="matrixMultiplicationRange.length - 1"
+							[(ngModel)]="webAssemblyMatrixMultiplicationRangeIndex"
+							(ionChange)="calculateWebAssemblyMatrixMultiplication()"
+							color="success">
+							<ion-label
+								range-left>{{
+								matrixMultiplicationRange[0]
+								}}</ion-label>
+							<ion-label
+								range-right>{{
+								matrixMultiplicationRange[
+								matrixMultiplicationRange.length
+								-
+								1
+								]
+								}}</ion-label>
+							<ion-icon
+								slot="end"
+								name="arrow-down-outline"
+								(click)="showNextSlot('GPU')"></ion-icon>
+						</ion-range>
+					</ion-item>
+				</ion-card>
+				<!-- web assembly -->
+
+				<!-- GPU -->
+				<ion-card
+					*ngIf="isGPUSlotVisible">
+					<ion-item
+						color="danger">
+						<ion-label>
+							<b> Using
+								GPU</b>
+						</ion-label>
+						<ion-button
+							color="light"
+							slot="end"
+							(click)="calculateGPUMatrixMultiplication()">
+							Calculate
+						</ion-button>
+					</ion-item>
+					<ion-item
+						*ngIf="gpuMatrixMultiplicationInProgress">
+						<ion-spinner
+							style="margin-left: 50%;"
+							name="dots"
+							color="danger"></ion-spinner>
+					</ion-item>
+				</ion-card>
+				<!-- GPU -->
+			</ion-col>
+			<ion-col
+				sizeLg="6"
+				sizeMd="12"
+				sizeSm="12"
+				sizeXl="6"
+				sizeXs="12">
+				<ion-card>
+					<ion-card-content>
+						<canvas
+							#barCanvas
+							style="position: relative; height:75vh; width:40vw"></canvas>
+					</ion-card-content>
+				</ion-card>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>
