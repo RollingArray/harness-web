@@ -15,17 +15,17 @@
 // -O3 is an optimization flag that tells the compiler to perform aggressive optimization.
 
 EMSCRIPTEN_KEEPALIVE
-int matrixMultiplication(int N) {
+void matrixMultiplication(int *a, int *b, int *c, int N) {
 
-  int *a = (int*) malloc(N * N * sizeof(int));
-  int *b = (int*) malloc(N * N * sizeof(int));
-  int *c = (int*) malloc(N * N * sizeof(int));
+  // int *a = (int*) malloc(N * N * sizeof(int));
+  // int *b = (int*) malloc(N * N * sizeof(int));
+  // int *c = (int*) malloc(N * N * sizeof(int));
 
-  // initialize matrices a and b with random values
-  for (int i = 0; i < N * N; ++i) {
-    a[i] = rand() % 10;
-    b[i] = rand() % 10;
-  }
+  // // initialize matrices a and b with random values
+  // for (int i = 0; i < N * N; ++i) {
+  //   a[i] = rand() % 10;
+  //   b[i] = rand() % 10;
+  // }
 
   // perform matrix multiplication
   for (int ii = 0; ii < N; ii += BLOCK_SIZE) {
@@ -57,11 +57,6 @@ int matrixMultiplication(int N) {
       }
     }
   }
-
-  free(a);
-  free(b);
-  free(c);
-  return 0;
 }
 
 

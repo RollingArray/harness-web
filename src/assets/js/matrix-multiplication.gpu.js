@@ -1,7 +1,7 @@
 async function matrixMultiplicationGPU(passedFirstMatrix, passedSecondMatrix) {
 	console.log("a");
 	if (!("gpu" in navigator)) {
-		console.log(
+		alert(
 			"WebGPU is not supported. Enable chrome://flags/#enable-unsafe-webgpu flag."
 		);
 		return;
@@ -9,7 +9,7 @@ async function matrixMultiplicationGPU(passedFirstMatrix, passedSecondMatrix) {
 
 	const adapter = await navigator.gpu.requestAdapter();
 	if (!adapter) {
-		console.log("Failed to get GPU adapter.");
+		alert("Failed to get GPU adapter.");
 		return;
 	}
 	const device = await adapter.requestDevice();

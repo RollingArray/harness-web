@@ -7,7 +7,7 @@
  * @author Ranjoy Sen <ranjoy.sen@collins.com>
  *
  * Created at     : 2023-04-01 11:16:32
- * Last modified  : 2023-04-10 21:02:11
+ * Last modified  : 2023-04-12 16:11:42
  */
 
 /* global performance */
@@ -179,6 +179,8 @@ export class AppComponent implements AfterViewInit
 							{
 								const result = combineSubMatrices(subMatricesC);
 
+								console.log(subMatricesC);
+								console.log(result);
 								const END_TIME = performance.now();
 								const TOTAL_TIME = END_TIME - START_TIME;
 								this.timeSpentOnWebWorkerMatrixMultiplication = [
@@ -198,6 +200,8 @@ export class AppComponent implements AfterViewInit
 
 	calculateWebAssemblyMatrixMultiplication()
 	{
+		type Matrix = number[][];
+
 		if (this.webAssemblyMatrixMultiplicationRangeIndex !== 0)
 		{
 			const START_TIME = performance.now();
@@ -206,35 +210,55 @@ export class AppComponent implements AfterViewInit
 				this.webAssemblyMatrixMultiplicationRangeIndex //
 			];
 
-			const matrixBlockSize = 32;
+			const matrixBlockSize = 32; //this.webWorkerMatrixMultiplicationSize < 1024 ? this.webWorkerMatrixMultiplicationSize / 2 : 512;
+			const matrix1: number[][] = generateMatrixBasedOnSize(this.webWorkerMatrixMultiplicationSize);
+			const matrix2: number[][] = generateMatrixBasedOnSize(this.webWorkerMatrixMultiplicationSize);
+
+			const subMatrices1 = splitMatrix(matrix1, matrixBlockSize);
+			const subMatrices2 = splitMatrix(matrix2, matrixBlockSize);
+
+			
+
+			//const matrixBlockSize = 32;
 
 			const numBlocks = this.webAssemblyMatrixMultiplicationSize / matrixBlockSize;
 
 			// Initialize result matrix
 			const subMatricesC: any[][] = [];
+			let returnedChunkMultipliedMatrix: {[x: number]: any} = {}; 
 			let workerReturnLoop = 0;
 
 			for (let i = 0; i < numBlocks; i++)
 			{
-
-
-
 				// Create a new
 				const MATRIX_MULTIPLICATION_WORKER = new Worker(new URL("algo/matrix-multiplication-webassembly.worker.ts", import.meta.url));
 				MATRIX_MULTIPLICATION_WORKER.postMessage({
-					matrixSize: matrixBlockSize
+					matrixSize: matrixBlockSize,
+					blockIndex: i
 				});
 
 				MATRIX_MULTIPLICATION_WORKER.onmessage = ({ data }) =>
 				{
 					workerReturnLoop++;
+					const key = data.blockIndex;
+					const value = data.result;
+					
+					returnedChunkMultipliedMatrix = {
+						...returnedChunkMultipliedMatrix,
+						[key]: value
+					};
+					//console.log(JSON.stringify(returnedChunkMultipliedMatrix));
 					
 					if (workerReturnLoop % numBlocks == 0)
 					{
-						// this brings the result of all the web workers to perform matrix 
-						// multiplication of the individual block matrices(size 32)
-						// todo - all matrices needs to be added to summarize the multiplication
-
+						for (let index = 0; index < numBlocks; index++)
+						{
+							const key = index;
+							subMatricesC.push(returnedChunkMultipliedMatrix[key]);
+						}
+						
+						// todo - join all matrixes in subMatricesC to get the final result
+						
 						const END_TIME = performance.now();
 						const TOTAL_TIME = END_TIME - START_TIME;
 						this.timeSpentOnWebAssemblyMatrixMultiplication = [
@@ -258,12 +282,22 @@ export class AppComponent implements AfterViewInit
 	 */
 	calculateGPUMatrixMultiplication()
 	{
+		if (!("gpu" in navigator)) {
+			
+			alert(
+				"WebGPU is not supported. Enable chrome://flags/#enable-unsafe-webgpu flag."
+			);
+			return false;
+		}
+
 		this.gpuMatrixMultiplicationInProgress = true;
 
 		this.matrixMultiplicationRange.map((eachRangeValue, index) =>
 		{
 			if (index !== 0)
 			{
+
+				
 
 				const startTime = performance.now();
 
@@ -302,6 +336,8 @@ export class AppComponent implements AfterViewInit
 
 			}
 		});
+
+		return true;
 	}
 
 	/**

@@ -127,6 +127,8 @@ export const combineSubMatrices = (subMatrices: any) =>
 	const blockSize = subMatrices[0][0].length;
 	const matrixSize = numBlocks * blockSize;
 
+	console.log(numBlocks, blockSize, matrixSize);
+
 	let resultMatrix: any[] = [];
 
 	for (let i = 0; i < subMatrices.length; i++)

@@ -7,7 +7,7 @@
  * @author Ranjoy Sen <ranjoy.sen@collins.com>
  *
  * Created at     : 2023-04-01 09:51:04 
- * Last modified  : 2023-04-01 09:51:04 
+ * Last modified  : 2023-04-11 20:07:55
  */
 
 
@@ -17,7 +17,7 @@
 
 export const environment = {
   production: false,
-  wasmApiBaseUrl: 'http://localhost:3000/',
+  wasmApiBaseUrl: 'http://localhost:3001/',
 };
 
 /*
